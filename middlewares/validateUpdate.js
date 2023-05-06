@@ -1,14 +1,11 @@
-const { HttpError } = require("../helpers");
-
-const validateUpdate = (schema) => {
-  const func = (req, res, next) => {
-    const { error } = schema.validate(req.body);
-    if (error) {
-      next(HttpError(400, "Missing fields"));
+const updateValiadation = (schema) => {
+  return (req, res, next) => {
+    const { error, value } = schema.validate(req.body);
+    if (error || !Object.keys(value).length) {
+      return res.status(400).json({ message: "missing fields" });
     }
     next();
   };
-  return func;
 };
 
-module.exports = validateUpdate;
+module.exports = updateValiadation;

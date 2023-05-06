@@ -6,6 +6,4 @@ const addSchemaUpd = Joi.object({
   phone: Joi.string(),
 });
 
-module.exports = {
-  addSchemaUpd,
-};
+module.exports = addSchemaUpd;

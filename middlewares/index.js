@@ -1,7 +1,13 @@
 const validateAdd = require("./validateAdd");
-const validateUpdate = require("./validateUpdate");
+const validate = require("./validate");
+const updateValiadation = require('./validateUpdate')
+const updateFavoriteValidation = require("./updateFavoriteValidation");
+const isValidId = require("./isValidId");
 
 module.exports = {
   validateAdd,
-  validateUpdate,
+  validate,
+  isValidId,
+  updateValiadation,
+  updateFavoriteValidation,
 };
