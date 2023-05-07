@@ -24,14 +24,23 @@ const add = async (req, res) => {
   });
   res.status(201).json(result);
 
-  res.json({ message: "template message" });
+  // res.json({ message: "template message" });
 };
 
 const updateById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
+  const result = await Contact.findByIdAndUpdate(
+    id,
+    req.body,
+    {
+      writeConcern: {
+        w: "majority",
+      },
+    },
+    {
+      new: true,
+    }
+  );
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -41,9 +50,18 @@ const updateById = async (req, res) => {
 const updateFavorite = async (req, res) => {
   const { id } = req.params;
 
-  const result = await Contact.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
+  const result = await Contact.findByIdAndUpdate(
+    id,
+    req.body,
+    {
+      writeConcern: {
+        w: "majority",
+      },
+    },
+    {
+      new: true,
+    }
+  );
   if (!req.body) {
     throw HttpError(404, "Not found");
   }
