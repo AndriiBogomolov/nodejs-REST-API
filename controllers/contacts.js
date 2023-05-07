@@ -23,8 +23,6 @@ const add = async (req, res) => {
     },
   });
   res.status(201).json(result);
-
-  // res.json({ message: "template message" });
 };
 
 const updateById = async (req, res) => {
@@ -70,6 +68,7 @@ const updateFavorite = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const { id } = req.params;
+  console.log(req.body);
   const result = await Contact.findByIdAndRemove(id, {
     writeConcern: {
       w: "majority",
