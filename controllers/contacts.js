@@ -17,7 +17,11 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const result = await Contact.create(req.body, {
+    writeConcern: {
+      w: "majority",
+    },
+  });
   res.status(201).json(result);
 
   res.json({ message: "template message" });

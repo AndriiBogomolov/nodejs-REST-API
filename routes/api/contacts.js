@@ -7,7 +7,7 @@ const {
   isValidId,
   updateValiadation,
   updateFavoriteValidation,
-  validateAdd,
+  // validateAdd,
 } = require("../../middlewares");
 // const { updateFavoriteSchema } = require("../../schemas/updateFavoriteSchema");
 
@@ -15,7 +15,7 @@ const {
   addSchema,
   addSchemaUpd,
   updateFavoriteSchema,
-} = require("../../schemas/contacts");
+} = require("../../schemas");
 
 // const { schemas } = require("../../models/contact");
 
@@ -27,7 +27,7 @@ router.get("/", ctrl.getAll);
 
 router.get("/:id", isValidId, ctrl.getById);
 
-router.post("/", validateAdd(addSchema), ctrl.add);
+router.post("/", validate(addSchema), ctrl.add);
 
 router.put("/:id", isValidId, updateValiadation(addSchemaUpd), ctrl.updateById);
 
