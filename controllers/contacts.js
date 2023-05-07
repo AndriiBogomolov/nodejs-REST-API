@@ -17,10 +17,14 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const result = await Contact.create(...req.body, {
+    writeConcern: {
+      w: "majority",
+    },
+  });
   res.status(201).json(result);
 
-  // res.json({ message: "template message" });
+  res.json({ message: "template message" });
 };
 
 // const updateById = async (req, res, next) => {
@@ -43,7 +47,9 @@ const add = async (req, res) => {
 
 const updateById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body);
+  const result = await Contact.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -64,7 +70,12 @@ const updateFavorite = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndRemove(id);
+  const result = await Contact.findByIdAndRemove(id, {
+    writeConcern: {
+      w: "majority",
+    },
+  });
+
   if (!result) {
     throw HttpError(404, "Not found");
   }

@@ -7,6 +7,7 @@ const {
   isValidId,
   updateValiadation,
   updateFavoriteValidation,
+  validateAdd,
 } = require("../../middlewares");
 // const { updateFavoriteSchema } = require("../../schemas/updateFavoriteSchema");
 
@@ -14,17 +15,19 @@ const {
   addSchema,
   addSchemaUpd,
   updateFavoriteSchema,
-} = require("../../schemas");
+} = require("../../schemas/contacts");
 
 // const { schemas } = require("../../models/contact");
 
 const router = express.Router();
 
+const Joi = require("joi");
+
 router.get("/", ctrl.getAll);
 
 router.get("/:id", isValidId, ctrl.getById);
 
-router.post("/", validate(addSchema), ctrl.add);
+router.post("/", validateAdd(addSchema, Joi), ctrl.add);
 
 router.put("/:id", isValidId, updateValiadation(addSchemaUpd), ctrl.updateById);
 
