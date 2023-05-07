@@ -21,13 +21,13 @@ const {
 
 const router = express.Router();
 
-const Joi = require("joi");
+// const Joi = require("joi");
 
 router.get("/", ctrl.getAll);
 
 router.get("/:id", isValidId, ctrl.getById);
 
-router.post("/", validateAdd(addSchema, Joi), ctrl.add);
+router.post("/", validateAdd(addSchema), ctrl.add);
 
 router.put("/:id", isValidId, updateValiadation(addSchemaUpd), ctrl.updateById);
 
