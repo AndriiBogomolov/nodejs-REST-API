@@ -2,21 +2,42 @@ const express = require("express");
 
 const ctrl = require("../../controllers/contacts");
 
-const { validateAdd, validateUpdate } = require("../../middlewares");
-const { addSchemaUpd } = require("../../schemas/contactsUpd");
+const {
+  validate,
+  isValidId,
+  updateValiadation,
+  updateFavoriteValidation,
+  // validateAdd,
+} = require("../../middlewares");
+// const { updateFavoriteSchema } = require("../../schemas/updateFavoriteSchema");
 
-const schemas = require("../../schemas/contacts");
+const {
+  addSchema,
+  addSchemaUpd,
+  updateFavoriteSchema,
+} = require("../../schemas");
+
+// const { schemas } = require("../../models/contact");
 
 const router = express.Router();
 
+// const Joi = require("joi");
+
 router.get("/", ctrl.getAll);
 
-router.get("/:id", ctrl.getById);
+router.get("/:id", isValidId, ctrl.getById);
 
-router.post("/", validateAdd(schemas.addSchema), ctrl.add);
+router.post("/", validate(addSchema), ctrl.add);
 
-router.put("/:id", validateUpdate(addSchemaUpd), ctrl.updateById);
+router.put("/:id", isValidId, updateValiadation(addSchemaUpd), ctrl.updateById);
 
-router.delete("/:id", ctrl.deleteById);
+router.patch(
+  "/:id/favorite",
+  isValidId,
+  updateFavoriteValidation(updateFavoriteSchema),
+  ctrl.updateFavorite
+);
+
+router.delete("/:id", isValidId, ctrl.deleteById);
 
 module.exports = router;
