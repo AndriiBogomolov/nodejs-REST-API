@@ -4,11 +4,19 @@ const ctrl = require("../../controllers/auth");
 
 const { validate, authenticate, upload } = require("../../middlewares");
 
-const { registerSchema, loginSchema } = require("../../models/user");
+const {
+  registerSchema,
+  loginSchema,
+  emailSchema,
+} = require("../../models/user");
 
 const router = express.Router();
 
 router.post("/register", validate(registerSchema), ctrl.register);
+
+router.get("/verify/:verificationCode", ctrl.verifyEmail);
+
+router.post("/verify", validate(emailSchema), ctrl.resendVerifyEmail);
 
 router.post("/login", validate(loginSchema), ctrl.login);
 
